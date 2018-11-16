@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require './lib/player'
+require './lib/game'
 
 class Battle < Sinatra::Base
   enable :sessions
@@ -9,6 +10,7 @@ class Battle < Sinatra::Base
   end
   #WHY DO WE NEED SESSIONS HERE
   post '/names' do
+    #WHY GLOBAL VARIABLE HERE
     $player_1 = Player.new(params[:player_1])
     $player_2 = Player.new(params[:player_2])
     # session[:player_1] = params[:player_1]
@@ -17,6 +19,7 @@ class Battle < Sinatra::Base
   end
 
   get '/play' do
+    #WHY USE AN INSTANCE VARIABLE TO STORE A GLOBAL VARIABLE
     # @player_1 = session[:player_1]
     # @player_2 = session[:player_2]
     @player_1 = $player_1.name
@@ -27,8 +30,9 @@ class Battle < Sinatra::Base
   get '/attack' do
     # @player_1 = session[:player_1]
     # @player_2 = session[:player_2]
-    @player_1 = $player_1.name
-    @player_2 = $player_2.name
+    @player_1 = $player_1
+    @player_2 = $player_2
+    Game.new.attack(@player_2)
     erb :attack
   end
 

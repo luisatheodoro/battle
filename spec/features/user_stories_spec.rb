@@ -16,4 +16,10 @@ feature 'user_stories' do
     expect(page).to have_content('Man attacked Food')
   end
 
+  scenario 'Attacking player will reduce 10 HP' do
+    sign_in_and_play
+    click_button("Attack")
+    expect(page).to have_content('Food: 50 HP')
+  end
+
 end
