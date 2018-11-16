@@ -1,17 +1,27 @@
 require 'game'
 
 describe Game do
-  let(:luisa) { Player.new('Luisa') }
-  let(:milo) { Player.new('Milo') }
+  let(:player_1) { double :player }
+  let(:player_2) { double :player }
+  let(:game) { Game.new(player_1, player_2) }
 
   describe '#attack' do
     it 'damages the player' do
-      expect(luisa).to receive(:receive_damage)
-      subject.attack(luisa)
+      expect(player_1).to receive(:receive_damage)
+      game.attack(player_1)
     end
 
-    it 'removes 10 hit points when attacked' do
-      expect(subject.attack(milo)).to eq 50
+  end
+
+  describe '#player_1' do
+    it 'retrieves the first player' do
+      expect(game.player_1).to eq player_1
+    end
+  end
+
+  describe '#player_2' do
+    it 'retrieves the second player' do
+      expect(game.player_2).to eq player_2
     end
   end
 
