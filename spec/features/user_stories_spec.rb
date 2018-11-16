@@ -16,10 +16,23 @@ feature 'user_stories' do
     expect(page).to have_content('Man attacked Food')
   end
 
-  scenario 'Attacking player will reduce 10 HP' do
+
+  scenario 'Player 1 Attacking Player 2 will reduce 10 HP' do
     sign_in_and_play
     click_button("Attack")
     expect(page).to have_content('Food: 50 HP')
+  end
+
+  scenario 'after player 1 attacks' do
+    sign_in_and_play
+    click_button("Attack")
+    expect(page).not_to have_content "Man's turn"
+    expect(page).to have_content "Food's turn"
+  end
+
+  scenario 'at the start of the game' do
+    sign_in_and_play
+    expect(page).to have_content "Man's turn"
   end
 
 end
